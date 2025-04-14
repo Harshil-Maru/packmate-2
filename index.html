@@ -42,17 +42,20 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
-      color: white;
+      padding: 1rem;
       text-align: center;
+      color: white;
     }
 
     .typewriter h1 {
       overflow: hidden;
       border-right: .15em solid #fff;
       white-space: nowrap;
-      margin: 0 auto;
+      margin: 0 auto 1rem;
       letter-spacing: .1em;
       animation: typing 3s steps(30, end), blink-caret 0.75s step-end infinite;
+      font-size: 1.4rem;
+      max-width: 90vw;
     }
 
     @keyframes typing {
@@ -66,8 +69,8 @@
     }
 
     .btn {
-      margin: 1rem;
-      padding: 1rem 2rem;
+      margin: 0.5rem;
+      padding: 0.8rem 1.5rem;
       font-size: 1rem;
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid #ffffff44;
@@ -76,10 +79,12 @@
       border-radius: 8px;
       transition: all 0.3s ease;
       backdrop-filter: blur(6px);
+      width: 80%;
+      max-width: 300px;
     }
 
     .btn:hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
       background-color: #ffffff22;
     }
 
@@ -89,16 +94,72 @@
       right: 1rem;
       z-index: 10;
       background: rgba(255, 255, 255, 0.1);
-      padding: 0.5rem 1rem;
+      padding: 0.4rem 0.8rem;
       border-radius: 6px;
       color: white;
       border: 1px solid #ffffff33;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     .audio-toggle:hover {
       background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Inputs */
+    input {
+      width: 80%;
+      border: none;
+      border-radius: 6px;
+      padding: 0.75rem;
+      background-color: #1e1e1e;
+      color: white;
+      font-size: 1rem;
+      margin: 0.5rem 0;
+    }
+
+    input::placeholder {
+      color: #aaa;
+    }
+
+    /* Modal base */
+    #loginModal, #eventModal {
+      display: none;
+      position: fixed;
+      z-index: 9;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+    }
+
+    /* Modal box */
+    .modal-box {
+      margin: 15% auto;
+      padding: 1.5rem;
+      background: #131313;
+      border-radius: 12px;
+      max-width: 90%;
+      text-align: center;
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      .typewriter h1 {
+        font-size: 1.2rem;
+      }
+
+      .btn {
+        font-size: 0.95rem;
+        padding: 0.7rem 1.2rem;
+      }
+
+      .audio-toggle {
+        font-size: 0.75rem;
+      }
+
+      .modal-box {
+        padding: 1.2rem;
+      }
     }
   </style>
 </head>
@@ -127,18 +188,18 @@
   </audio>
 
   <!-- Login Modal -->
-  <div id="loginModal" style="display:none; position:fixed; z-index:9; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6);">
-    <div style="margin:10% auto; padding:2rem; background:#131313; border-radius:12px; max-width:400px; text-align:center;">
+  <div id="loginModal">
+    <div class="modal-box">
       <h2>Login</h2>
-      <input type="text" placeholder="User ID" style="padding:0.5rem; margin:0.5rem;"><br>
-      <input type="password" placeholder="Password" style="padding:0.5rem; margin:0.5rem;"><br>
-      <button onclick="submitLogin()" style="margin-top:1rem;" class="btn">Submit</button>
+      <input type="text" placeholder="User ID"><br>
+      <input type="password" placeholder="Password"><br>
+      <button onclick="submitLogin()" class="btn">Submit</button>
     </div>
   </div>
 
-  <!-- Event List Modal -->
-  <div id="eventModal" style="display:none; position:fixed; z-index:9; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6);">
-    <div style="margin:5% auto; padding:2rem; background:#0d0d0d; border-radius:12px; max-width:500px; text-align:center;">
+  <!-- Event Modal -->
+  <div id="eventModal">
+    <div class="modal-box">
       <h2>Your Events</h2>
       <ul style="list-style:none; padding:0;">
         <li><button onclick="goToDashboard()" class="btn">Hackathon</button></li>
@@ -196,6 +257,11 @@
         playClick();
       }
     }
+
+    // Prevent autoplay issues on mobile
+    window.addEventListener('click', () => {
+      bgMusic.play().catch(e => console.log("Autoplay blocked"));
+    }, { once: true });
   </script>
 
 </body>
