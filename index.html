@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PackMate by HackaHuliX</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      height: 100%;
+      background-color: #0b0b0b;
+      overflow: hidden;
+    }
+
+    .half-circle {
+      position: absolute;
+      bottom: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200vmax;
+      height: 200vmax;
+      background: linear-gradient(45deg, #6c47ff, #ff6bcf, #ffe86f);
+      border-radius: 50%;
+      animation: riseUp 2.5s ease forwards;
+      z-index: 0;
+    }
+
+    @keyframes riseUp {
+      to {
+        bottom: -5%;
+      }
+    }
+
+    .center-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: white;
+      text-align: center;
+    }
+
+    .typewriter h1 {
+      overflow: hidden;
+      border-right: .15em solid #fff;
+      white-space: nowrap;
+      margin: 0 auto;
+      letter-spacing: .1em;
+      animation: typing 3s steps(30, end), blink-caret 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: white }
+    }
+
+    .btn {
+      margin: 1rem;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid #ffffff44;
+      color: white;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(6px);
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
+      background-color: #ffffff22;
+    }
+
+    .audio-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      color: white;
+      border: 1px solid #ffffff33;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .audio-toggle:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="half-circle"></div>
+
+  <div class="audio-toggle" onclick="toggleAudio()">🔊 Music On</div>
+
+  <div class="center-content">
+    <div class="typewriter">
+      <h1>Welcome to PackMate by HackaHuliX</h1>
+    </div>
+    <button class="btn" onclick="openLogin()">Login</button>
+    <button class="btn" onclick="location.href='event.html'">Trial Demo</button>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="background-music" autoplay loop>
+    <source src="data:audio/mp3;base64,//uQxAAADhYWFhYWF..." type="audio/mp3">
+  </audio>
+
+  <!-- Sound Effect -->
+  <audio id="click-sound">
+    <source src="data:audio/mp3;base64,//uQxAAADhYWFhYWF..." type="audio/mp3">
+  </audio>
+
+  <!-- Login Modal -->
+  <div id="loginModal" style="display:none; position:fixed; z-index:9; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6);">
+    <div style="margin:10% auto; padding:2rem; background:#131313; border-radius:12px; max-width:400px; text-align:center;">
+      <h2>Login</h2>
+      <input type="text" placeholder="User ID" style="padding:0.5rem; margin:0.5rem;"><br>
+      <input type="password" placeholder="Password" style="padding:0.5rem; margin:0.5rem;"><br>
+      <button onclick="submitLogin()" style="margin-top:1rem;" class="btn">Submit</button>
+    </div>
+  </div>
+
+  <!-- Event List Modal -->
+  <div id="eventModal" style="display:none; position:fixed; z-index:9; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6);">
+    <div style="margin:5% auto; padding:2rem; background:#0d0d0d; border-radius:12px; max-width:500px; text-align:center;">
+      <h2>Your Events</h2>
+      <ul style="list-style:none; padding:0;">
+        <li><button onclick="goToDashboard()" class="btn">Hackathon</button></li>
+        <li><button onclick="addNewEvent()" class="btn">+ Add Event</button></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    const bgMusic = document.getElementById("background-music");
+    const clickSound = document.getElementById("click-sound");
+    const toggleBtn = document.querySelector('.audio-toggle');
+    let musicPlaying = true;
+
+    function toggleAudio() {
+      if (musicPlaying) {
+        bgMusic.pause();
+        toggleBtn.innerText = "🔇 Music Off";
+      } else {
+        bgMusic.play();
+        toggleBtn.innerText = "🔊 Music On";
+      }
+      musicPlaying = !musicPlaying;
+    }
+
+    function playClick() {
+      clickSound.currentTime = 0;
+      clickSound.play();
+    }
+
+    function openLogin() {
+      playClick();
+      document.getElementById("loginModal").style.display = "block";
+    }
+
+    function submitLogin() {
+      playClick();
+      document.getElementById("loginModal").style.display = "none";
+      document.getElementById("eventModal").style.display = "block";
+    }
+
+    function goToDashboard() {
+      playClick();
+      window.location.href = "event.html";
+    }
+
+    function addNewEvent() {
+      const name = prompt("Enter Event Name:");
+      const start = prompt("Start Date:");
+      const end = prompt("End Date:");
+      const role = prompt("Your Role:");
+      if (name && start && end && role) {
+        alert("Event added to your list!");
+        playClick();
+      }
+    }
+  </script>
+
+</body>
+</html>

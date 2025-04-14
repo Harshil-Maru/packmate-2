@@ -1,0 +1,128 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Packmate - Event Page</title>
+  <!-- Google Fonts for Modern Look -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Rubik:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="event.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+<body class="dark-mode">
+  <!-- Dark Mode Toggle UI (Non-logic affecting element) -->
+  <label class="switch">
+    <input type="checkbox" onchange="document.body.classList.toggle('dark-mode')" checked>
+    <span class="slider"></span>
+  </label>
+
+  <!-- Doodle Decoration -->
+  <img src="doodles/abstract-doodle.svg" class="doodle" alt="Doodle Graphic" />
+
+  <div class="container">
+    <!-- LEFT SIDEBAR -->
+    <div class="sidebar">
+      <div>
+        <h1 data-aos="fade-down" data-aos-duration="1000">PackMate</h1>
+        <div data-aos="fade-right" data-aos-duration="1500">
+          <h3>Event Info</h3>
+          <ul>
+            <li>Name: Hackathon Prep</li>
+            <li>Date: Apr 13–14</li>
+            <li>Role: <span class="tag owner">Owner</span></li>
+          </ul>
+          <h3>Members</h3>
+          <ul id="memberList">
+            <!-- Members will be dynamically added here -->
+          </ul>
+          <button onclick="openMemberForm()" class="add-member-btn">+ Add Member</button>
+        </div>
+      </div>
+      <div class="actions">
+        <button onclick="exportPDF()">📄 Export PDF</button>
+        <button class="danger">🗑 Delete Event</button>
+      </div>
+    </div>
+
+    <!-- MAIN CHECKLIST -->
+    <div class="main">
+      <div data-aos="fade-down" data-aos-duration="1500" class="tabs" id="tabButtons">
+        <button class="active" onclick="switchTab('tech')">tech</button>
+        <button onclick="switchTab('hygiene')">hygiene</button>
+        <button onclick="switchTab('docs')">docs</button>
+        <button onclick="addCategory()">➕ Add Category</button>
+      </div>
+      <div data-aos="zoom-in" data-aos-duration="2000" id="checklist">
+        <!-- Items will be rendered here -->
+      </div>
+    </div>
+
+    <!-- RIGHT SIDEBAR -->
+    <div class="progress-dashboard">
+      <!-- Donut Chart -->
+      <div class="progress-box pie-chart-box">
+        <canvas id="progressPieChart"></canvas>
+      </div>
+    
+      <!-- Progress Info -->
+      <div data-aos="zoom-in-left" data-aos-duration="1500" class="progress-box progress-info-box">
+        <div class="progress-percentage" id="progressPercentage">0% Packed</div>
+        <div class="progress-info">
+          <div><strong>Total Items:</strong> <span id="totalItems">0</span></div>
+          <div><strong>Packed:</strong> <span id="packedItems">0</span></div>
+          <div><strong>Unpacked:</strong> <span id="unpackedItems">0</span></div>
+        </div>
+      </div>
+    
+      <!-- Completion History -->
+      <div data-aos="zoom-in-left" data-aos-duration="2000" class="progress-box history-box">
+        <h4>Completion History</h4>
+        <ul id="completionHistory">
+          
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div id="memberFormModal" class="modal">
+    <div class="modal-content">
+      <h3>Add New Member</h3>
+      <input type="text" id="memberName" placeholder="Member Name" />
+      <select id="memberRole">
+        <option value="Organizer">Organizer</option>
+        <option value="Admin">Admin</option>
+        <option value="Member">Member</option>
+        <option value="Viewer">Viewer</option>
+      </select>
+      <button onclick="addMember()">Add</button>
+      <button onclick="closeMemberForm()" class="cancel">Cancel</button>
+    </div>
+  </div>
+  <!-- Hidden PDF Export Content -->
+<div id="pdfContent" style="display: none; font-family: 'Rubik', sans-serif; padding: 20px;">
+  <h2 style="text-align: center;">PackMate - Event Summary</h2>
+  
+  <h3>Event Info</h3>
+  <p><strong>Name:</strong> Hackathon Prep</p>
+  <p><strong>Date:</strong> Apr 13–14</p>
+
+  <h3>Checklist Items</h3>
+  <ul id="pdfItemList">
+    <!-- JS will fill this -->
+  </ul>
+
+  <h3>Completion History</h3>
+  <ul id="pdfHistoryList">
+    <!-- JS will fill this -->
+  </ul>
+</div>
+  <script src="event.js"></script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    AOS.init();
+  </script>
+</body>
+</html>
