@@ -353,25 +353,28 @@ body::-webkit-scrollbar {
     max-width: 100%;
   }
 
-  .sidebar, .progress-dashboard {
+  .sidebar,
+  .main,
+  .progress-dashboard {
     width: 100%;
-    border: none;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+
+  .sidebar {
     border-bottom: 1px solid var(--card-border);
   }
 
+  .main {
+    order: 2;
+  }
+
   .progress-dashboard {
+    order: 3;
     border-top: 1px solid var(--card-border);
   }
-
-  .main {
-    overflow-y: visible;
-  }
 }
 
-/* Remove scrollbars visually (optional) but allow scroll! */
-* {
-  box-sizing: border-box;
-}
 
 html, body {
   height: 100%;
