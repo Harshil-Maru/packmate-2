@@ -103,6 +103,8 @@ body::-webkit-scrollbar {
   margin: 0 auto;
   position: relative;
   z-index: 1;
+  flex-direction: row;
+  gap: 20px;
 }
 
 /* Sidebar */
@@ -345,36 +347,36 @@ body::-webkit-scrollbar {
   background-color: #888;
 }
 
-/* Responsive Design */
+/* Responsive layout for mobile devices */
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
-    height: auto;
-    max-width: 100%;
   }
 
   .sidebar,
   .main,
   .progress-dashboard {
     width: 100%;
-    padding: 15px;
-    box-sizing: border-box;
-  }
-
-  .sidebar {
-    border-bottom: 1px solid var(--card-border);
-  }
-
-  .main {
-    order: 2;
   }
 
   .progress-dashboard {
-    order: 3;
-    border-top: 1px solid var(--card-border);
+    display: block;
+    order: 3; /* Show after checklist */
+    margin-top: 20px;
+  }
+
+  .progress-box {
+    margin-bottom: 20px;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+  }
+
+  #checklist {
+    padding-bottom: 20px;
   }
 }
-
 
 html, body {
   height: 100%;
